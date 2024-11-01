@@ -1,21 +1,24 @@
 const canvas = document.getElementById('planetCanvas');
 const alien = document.getElementById('alien');
+const darthvador = document.getElementById('darthvador');
 const ufo = document.getElementById('ufo');
+const deathstar = document.getElementById('deathstar');
 const ctx = canvas.getContext('2d');
+const broken_background = document.getElementById('broken_background');
 
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 const planets = [
-    { name: "Death Star", imageSrc: "images/deathstar.png", size: 1, fact: "강력한 슈퍼레이저로 행성을 파괴할 수 있는 무서운 무기를 가지고 있다. 이 슈퍼레이저는 여러 개의 빔이 모여서 하나의 초강력 레이저로 합쳐지면서 발사된다. ", wiki: "https://ko.wikipedia.org/wiki/%EB%8D%B0%EC%8A%A4_%EC%8A%A4%ED%83%80", x: 768, y: 365},
-    { name: "LV-426", imageSrc: "images/lv-426.png", size: 9, fact: "", wiki: "https://namu.wiki/w/LV-426", x: 758, y: 370},
-    { name: "Oberon", imageSrc: "images/oberon.png", size: 12, fact: "", wiki: "https://ko.wikipedia.org/wiki/%EC%98%A4%EB%B2%A0%EB%A1%A0_(%EC%9C%84%EC%84%B1)", x: 773, y: 348},
+    { name: "Death Star", imageSrc: "images/deathstar.png", size: 1, fact: "강력한 슈퍼레이저로 행성을 파괴할 수 있는 무서운 무기를 가지고 있다. 이 슈퍼레이저는 여러 개의 빔이 모여서 하나의 초강력 레이저로 합쳐지면서 발사된다. 이 행성의 주인이 우주 어느 곳을 떠다닌다는 소문이 있다.", wiki: "https://ko.wikipedia.org/wiki/%EB%8D%B0%EC%8A%A4_%EC%8A%A4%ED%83%80", x: 768, y: 365},
+    { name: "LV-426", imageSrc: "images/lv-426.png", size: 9, fact: "제노모프 외계 생명체가 처음 발견된 곳이다. 대기 조성이 인간에게 치명적이다.", wiki: "https://namu.wiki/w/LV-426", x: 758, y: 370},
+    { name: "Oberon", imageSrc: "images/oberon.png", size: 12, fact: "많은 수의 밝은 구덩이들 중 몇 개에서는 용암 같은 거무스름한 물질이 흘러나온 것으로 추정된다.", wiki: "https://ko.wikipedia.org/wiki/%EC%98%A4%EB%B2%A0%EB%A1%A0_(%EC%9C%84%EC%84%B1)", x: 773, y: 348},
     { name: "Pluto", imageSrc: "images/pluto.png", size: 19, fact: "2006년 국제천문연맹(IAU)은 '행성'이라는 용어를 재정의하고 명왕성을 왜행성으로 강등하기로 했다.", wiki: "https://ko.wikipedia.org/wiki/%EB%AA%85%EC%99%95%EC%84%B1", x: 780, y: 375 },
-    { name: "Triton", imageSrc: "images/triton.png", size: 21, fact: "", wiki: "https://ko.wikipedia.org/wiki/%ED%8A%B8%EB%A6%AC%ED%86%A4_(%EC%9C%84%EC%84%B1)", x: 740, y: 330},
-    { name: "Europa", imageSrc: "images/europa.png", size: 21, fact: "", wiki: "https://ko.wikipedia.org/wiki/%EC%9C%A0%EB%A1%9C%ED%8C%8C_(%EC%9C%84%EC%84%B1)", x: 730, y: 380},
+    { name: "Triton", imageSrc: "images/triton.png", size: 21, fact: "트리톤은 차가운 온도에도 불구하고 표면에 활발한 지질 활동이 관찰되었다. 심지어 간헐천이 발견되었는데, 이 간헐천은 질소 얼음을 분출하여 표면 위로 몇 킬로미터까지 솟아오르게 한다.", wiki: "https://ko.wikipedia.org/wiki/%ED%8A%B8%EB%A6%AC%ED%86%A4_(%EC%9C%84%EC%84%B1)", x: 740, y: 330},
+    { name: "Europa", imageSrc: "images/europa.png", size: 21, fact: "유로파의 지하 바다는 생명체가 존재할 수 있는 조건을 갖추고 있을 가능성이 있다. 수십 킬로미터 두께의 얼음층 아래에서 화산 활동이나 조석 열로 인해 따뜻한 물 환경이 형성될 수 있으며, 이곳이 미생물 같은 생명체가 살기에 적합할지도 모른다고 추측된다.", wiki: "https://ko.wikipedia.org/wiki/%EC%9C%A0%EB%A1%9C%ED%8C%8C_(%EC%9C%84%EC%84%B1)", x: 730, y: 380},
     { name: "Moon", imageSrc: "images/moon.png", size: 25, fact: "달은 매년 약 3.8cm씩 지구에서 멀어지고 있어, 수십억 년 후에는 달이 더 멀어져 지금처럼 큰 달을 볼 수 없을지도 모른다. ", wiki: "https://ko.wikipedia.org/wiki/%EB%8B%AC", x: 790, y: 315},
-    { name: "Io", imageSrc: "images/io.png", size: 29, fact: "", wiki: "https://ko.wikipedia.org/wiki/%EC%9D%B4%EC%98%A4_(%EC%9C%84%EC%84%B1)", x: 700, y: 340},
+    { name: "Io", imageSrc: "images/io.png", size: 29, fact: "이오는 태양계 내에서 가장 활발한 화산 활동을 보여주는 천체로, 표면에는 수백 개의 화산이 있다.", wiki: "https://ko.wikipedia.org/wiki/%EC%9D%B4%EC%98%A4_(%EC%9C%84%EC%84%B1)", x: 700, y: 340},
     { name: "Ganymede", imageSrc: "images/ganymede.png", size: 29, fact: "가니메데의 표면 아래에는 지구보다도 많은 물이 존재할 가능성이 높다. 표면 아래 약 150km 깊이에 얼음 층과 액체 바다가 겹겹이 쌓여 있을 것으로 추정된다.", wiki: "https://ko.wikipedia.org/wiki/%EA%B0%80%EB%8B%88%EB%A9%94%EB%8D%B0_(%EC%9C%84%EC%84%B1)", x: 810, y: 360},
     { name: "Asia", imageSrc: "images/asia.png", size: 30, fact: "세계 인구의 약 60%가 아시아에 산다.", wiki: "https://ko.wikipedia.org/wiki/%EC%95%84%EC%8B%9C%EC%95%84", x: 760, y: 410},
     { name: "Callisto", imageSrc: "images/callisto.png", size: 38, fact: "태양계에서 가장 많은 크레이터를 가지고 있다.", wiki: "https://ko.wikipedia.org/wiki/%EC%B9%BC%EB%A6%AC%EC%8A%A4%ED%86%A0_(%EC%9C%84%EC%84%B1)", x: 680, y: 390},
@@ -181,6 +184,19 @@ function moveAlien() {
     alien.style.transform = `translate(${randomX}px, ${randomY}px)`;
 }
 
+// 다스베이더 이미지를 무작위 위치로 이동시키는 함수
+function moveDarthvaodr() {
+    const maxX = window.innerWidth - darthvador.offsetWidth;
+    const maxY = window.innerHeight - darthvador.offsetHeight;
+
+    // 무작위 위치 생성
+    const randomX = Math.floor(Math.random() * maxX);
+    const randomY = Math.floor(Math.random() * maxY);
+
+    // 다스베이더 이미지의 위치 업데이트
+    darthvador.style.transform = `translate(${randomX}px, ${randomY}px)`;
+}
+
 // UFO 이미지를 무작위 위치로 이동시키는 함수
 function moveUfo() {
     const maxX = window.innerWidth - ufo.offsetWidth;
@@ -194,11 +210,145 @@ function moveUfo() {
     ufo.style.transform = `translate(${randomX}px, ${randomY}px)`;
 }
 
+// deathstar 이미지를 무작위 위치로 이동시키는 함수
+function moveDeathstar() {
+    const maxX = window.innerWidth - deathstar.offsetWidth;
+    const maxY = window.innerHeight - deathstar.offsetHeight;
+
+    // 무작위 위치 생성
+    const randomX = Math.floor(Math.random() * maxX);
+    const randomY = Math.floor(Math.random() * maxY);
+
+    // Death Star 이미지의 위치 업데이트
+    deathstar.style.transform = `translate(${randomX}px, ${randomY}px)`;
+}
+
+let spacebarCount = 0;
+let timerStarted = false;
+let startTime = null;
+
+const selectedIndices = new Set(); // 이미 선택된 인덱스를 저장할 Set
+
+function getRandomPlanet() {
+    if (selectedIndices.size === planets.length-1) {
+        alert("모든 행성이 다 파괴되었습니다!");
+        return null;
+    }
+
+    let randomIndex;
+    do {
+        randomIndex = Math.floor(Math.random() * planets.length);
+    } while (randomIndex == 0 || selectedIndices.has(randomIndex)); // 중복될 경우 다시 선택
+
+    selectedIndices.add(randomIndex); // 선택된 인덱스 기록
+    return planets[randomIndex];
+}
+
+document.addEventListener("keydown", (event) => {
+    if (event.code === "Space") {
+        if (!timerStarted) {
+            // 타이머 시작
+            timerStarted = true;
+            startTime = Date.now();
+
+            setTimeout(() => {
+                timerStarted = false;
+                spacebarCount = 0; // 카운트 초기화
+            }, 10000); // 10초
+        }
+        
+        if (timerStarted) {
+            spacebarCount++;
+
+            if (spacebarCount > 15) {
+                startTime = Date.now();
+
+                alien.style.display = "none";
+                darthvador.style.display = "block";
+                ufo.style.display = "none";
+                deathstar.style.display = "block";
+                const title = document.querySelector("h1");
+                title.textContent = "Destroy Planet"; // 제목 텍스트 변경
+                title.style.color = "red"; // 글씨 색상 빨간색으로 변경
+
+                setTimeout(() => {
+                    startTime = Date.now(); 
+                    breakBackground();
+                    
+                    setTimeout(() => {
+                        startTime = Date.now();
+
+                        broken_background.style.display = "block";
+
+                        setTimeout(() => {                            
+                            // 랜덤으로 planet 객체에 접근
+                            const randomPlanet = getRandomPlanet();
+                            
+                            randomPlanet.imageSrc = "images/broken_planet.png";
+                            randomPlanet.fact = "데스 스타에 의해 파괴된 행성입니다."
+
+                            broken_background.style.display = "none";
+                            alien.style.display = "block";
+                            darthvador.style.display = "none";
+                            ufo.style.display = "block";
+                            deathstar.style.display = "none";
+                            const title = document.querySelector("h1");
+                            title.textContent = "Space Map"; // 제목 텍스트 변경
+                            title.style.color = "white"; // 글씨 색상 빨간색으로 변경
+                        }, 3000)
+                    }, 1500)
+                }, 3000)
+            }
+        }
+    }
+});
+
+// 배경이 부서지는 효과 함수
+function breakBackground() {
+    const body = document.body;
+    let flickerCount = 0;
+    const flickerOverlay = document.createElement("style");
+
+    const flickerInterval = setInterval(() => {
+        // 빨간색 오버레이 표시 또는 숨기기
+        flickerOverlay.innerHTML = `body::before { display: ${flickerCount % 2 === 0 ? 'block' : 'none'}; }`;
+        document.head.appendChild(flickerOverlay);
+        flickerCount++;
+
+        if (flickerCount > 15) { // 일정 횟수 후 멈춤
+            clearInterval(flickerInterval);
+            flickerOverlay.remove(); // 깜빡임 종료 후 오버레이 제거
+            body.style.backgroundImage = 'url("broken_background.png")'; // 깨진 배경 이미지로 교체 (이미지가 필요)
+            body.style.backgroundSize = 'cover';
+        }
+    }, 100); // 0.1초마다 깜빡임
+}
+
+
+const easterEgg = document.getElementById('easterEgg'); // textBox 요소 참조
+
+alien.addEventListener('click', () => {
+    easterEgg.style.display = 'block';
+    setTimeout(() => {
+        easterEgg.style.display = 'none'; // 3초 후 이스터에그 숨기기
+    }, 3000); // 3000ms = 3초
+});
+
+ufo.addEventListener('click', () => {
+    easterEgg.style.display = 'block';
+    setTimeout(() => {
+        easterEgg.style.display = 'none'; // 3초 후 이스터에그 숨기기
+    }, 3000); // 3000ms = 3초
+});
+
+
 // 주기적으로 외계인 이미지를 이동
 setInterval(moveAlien, 1000); // 1초마다 새로운 위치로 이동
+setInterval(moveDarthvaodr, 1000);
 
 // 주기적으로 UFO 이미지를 이동
 setInterval(moveUfo, 1000); // 1초마다 새로운 위치로 이동
+setInterval(moveDeathstar, 1000);
 
 // 초기 화면에 행성 박스를 생성하여 표시
 drawPlanets();
