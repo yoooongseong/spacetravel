@@ -1,13 +1,23 @@
+const canvas = document.getElementById('planetCanvas');
+const alien = document.getElementById('alien');
+const ufo = document.getElementById('ufo');
+const ctx = canvas.getContext('2d');
+
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
 const planets = [
-    { name: "Mercury", imageSrc: "images/mercury.png", size: 70, fact: "Mercury is the smallest planet.", wiki: "https://en.wikipedia.org/wiki/Mercury_(planet)", x: 100, y: 250 },
-    { name: "Venus", imageSrc: "images/venus.png", size: 98, fact: "Venus is the hottest planet.", wiki: "https://en.wikipedia.org/wiki/Venus", x: 300, y: 290 },
-    { name: "Earth", imageSrc: "images/earth.png", size: 100, fact: "Earth is the only planet known to support life.", wiki: "https://en.wikipedia.org/wiki/Earth", x: 700, y: 300 },
-    { name: "Mars", imageSrc: "images/mars.png", size: 70, fact: "Mars is known as the Red Planet.", wiki: "https://en.wikipedia.org/wiki/Mars", x: 500, y: 320 },
-    { name: "Jupiter", imageSrc: "images/jupiter.png", size: 300, fact: "Jupiter is the largest planet.", wiki: "https://en.wikipedia.org/wiki/Jupiter", x: 1000, y: 260 },
-    { name: "Saturn", imageSrc: "images/saturn.png", size: 300, fact: "Saturn has spectacular rings.", wiki: "https://en.wikipedia.org/wiki/Saturn", x: 1400, y: 315 },
-    { name: "Uranus", imageSrc: "images/uranus.png", size: 200, fact: "Uranus rotates on its side.", wiki: "https://en.wikipedia.org/wiki/Uranus", x: 1800, y: 300 },
-    { name: "Neptune", imageSrc: "images/neptune.png", size: 360, fact: "Neptune is the farthest planet.", wiki: "https://en.wikipedia.org/wiki/Neptune", x: 2200, y: 300 }
-  ];
+  { name: "Mercury", imageSrc: "images/mercury.png", size: 70, fact: "Mercury is the smallest planet.", wiki: "https://en.wikipedia.org/wiki/Mercury_(planet)", x: 100, y: 250 },
+  { name: "Venus", imageSrc: "images/venus.png", size: 98, fact: "Venus is the hottest planet.", wiki: "https://en.wikipedia.org/wiki/Venus", x: 300, y: 290 },
+  { name: "Earth", imageSrc: "images/earth.png", size: 100, fact: "Earth is the only planet known to support life.", wiki: "https://en.wikipedia.org/wiki/Earth", x: 700, y: 300 },
+  { name: "Mars", imageSrc: "images/mars.png", size: 70, fact: "Mars is known as the Red Planet.", wiki: "https://en.wikipedia.org/wiki/Mars", x: 500, y: 320 },
+  { name: "Jupiter", imageSrc: "images/jupiter.png", size: 300, fact: "Jupiter is the largest planet.", wiki: "https://en.wikipedia.org/wiki/Jupiter", x: 1000, y: 260 },
+  { name: "Saturn", imageSrc: "images/saturn.png", size: 300, fact: "Saturn has spectacular rings.", wiki: "https://en.wikipedia.org/wiki/Saturn", x: 1400, y: 315 },
+  { name: "Uranus", imageSrc: "images/uranus.png", size: 200, fact: "Uranus rotates on its side.", wiki: "https://en.wikipedia.org/wiki/Uranus", x: 1800, y: 300 },
+  { name: "Neptune", imageSrc: "images/neptune.png", size: 360, fact: "Neptune is the farthest planet.", wiki: "https://en.wikipedia.org/wiki/Neptune", x: 2200, y: 300 },
+  { name: "Pluto", imageSrc: "images/pluto.png", size: 340, fact: "Pluto is the farthest planet.", wiki: "https://en.wikipedia.org/wiki/Pluto", x: 2500, y: 300 }
+];
 
 
 let scale = 0.2; // 초기 확대 배율
@@ -117,6 +127,39 @@ document.addEventListener("click", (event) => {
         }
     }
 });
+
+// 외계인 이미지를 무작위 위치로 이동시키는 함수
+function moveAlien() {
+  const maxX = window.innerWidth - alien.offsetWidth;
+  const maxY = window.innerHeight - alien.offsetHeight;
+
+  // 무작위 위치 생성
+  const randomX = Math.floor(Math.random() * maxX);
+  const randomY = Math.floor(Math.random() * maxY);
+
+  // 외계인 이미지의 위치 업데이트
+  alien.style.transform = `translate(${randomX}px, ${randomY}px)`;
+}
+
+// 외계인 이미지를 무작위 위치로 이동시키는 함수
+function moveUfo() {
+  const maxX = window.innerWidth - ufo.offsetWidth;
+  const maxY = window.innerHeight - ufo.offsetHeight;
+
+  // 무작위 위치 생성
+  const randomX = Math.floor(Math.random() * maxX);
+  const randomY = Math.floor(Math.random() * maxY);
+
+  // 외계인 이미지의 위치 업데이트
+  ufo.style.transform = `translate(${randomX}px, ${randomY}px)`;
+}
+
+// 주기적으로 외계인 이미지를 이동
+setInterval(moveAlien, 1000); // 2초마다 새로운 위치로 이동
+
+// 주기적으로 ufo 이미지를 이동
+setInterval(moveUfo, 100); // 2초마다 새로운 위치로 이동
+
 
 // 초기 화면에 행성 박스를 생성하여 표시
 drawPlanets();
