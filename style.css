@@ -64,3 +64,13 @@ canvas {
   pointer-events: none; /* 클릭 불가능하게 설정 */
   transition: transform 1s linear; /* 부드러운 이동을 위한 전환 효과 */
 }
+
+.fixed-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover; /* 화면 크기에 맞춰 이미지를 채움 */
+  z-index: 0; /* 캔버스 뒤로 배치 */
+}
